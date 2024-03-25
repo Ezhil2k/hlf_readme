@@ -1,0 +1,72 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: explorer
+  namespace: explorer
+spec:
+  selector:
+    matchLabels:
+      app: explorer
+  template:
+    metadata:
+      labels:
+        app: explorer
+    spec:
+      volumes:
+        - name: explorer-config
+          configMap:
+            name: explorer-config
+            items:
+              - key: config.json
+                path: config.json
+              - key: network.json
+                path: network.json
+      containers:
+        - name: explorer
+          image: ghcr.io/hyperledger-labs/explorer:2.0
+          env:
+            - name: DATABASE_HOST
+              value: "explorerdb-service"
+            - name: DATABASE_DATABASE
+              value: "blockchain-explorer"
+            - name: DATABASE_USERNAME
+              value: "admin"
+            - name: DATABASE_PASSWD
+              value: "adminpasswd"
+            - name: LOG_LEVEL_APP
+              value: "debug"
+            - name: LOG_LEVEL_DB
+              value: "debug"
+            - name: LOG_LEVEL_CONSOLE
+              value: "info"
+            - name: LOG_CONSOLE_STDOUT
+              value: "true"
+            - name: DISCOVERY_AS_LOCALHOST
+              value: "false"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /opt/explorer/app/platform/fabric/config.json
+              name: explorer-config
+              subPath: config.json  
+            - mountPath: /opt/explorer/app/platform/fabric/blockchain-network.json
+              name: explorer-config
+              subPath: network.json  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: explorer
+  namespace: explorer
+spec:
+  selector:
+    app: explorer
+  ports:
+    - port: 8080
+      targetPort: 8080

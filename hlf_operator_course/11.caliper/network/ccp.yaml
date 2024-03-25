@@ -1,0 +1,34 @@
+name: hlf-network
+version: 1.0.0
+client:
+  tlsEnable: true
+  organization: Org1MSP
+  connection:
+    timeout:
+      peer:
+        endorser: "300"
+      orderer: "300"
+channels:
+  testchannel:
+    peers:
+      org1-peer1.org1: {}
+organizations:
+  Org1MSP:
+    mspid: Org1MSP
+    signedCert:
+      pem: |
+            -----BEGIN CERTIFICATE-----
+            -----END CERTIFICATE-----
+    adminPrivateKey:
+      pem: |
+            -----BEGIN PRIVATE KEY-----
+            -----END PRIVATE KEY-----
+    peers:
+      - org1-peer1.org1
+peers:
+  org1-peer1.org1:
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----
+        -----END CERTIFICATE-----
+    url: grpcs://peer1-org1.$DOMAIN:443

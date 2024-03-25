@@ -1,0 +1,29 @@
+test:
+  name: basic-contract-benchmark
+  description: A test benchmark
+  workers:
+    type: remote
+    number: 10
+  rounds:
+    - label: Create Asset
+      description: This test will create assets object
+      txDuration: 3000
+      rateControl:
+          type: fixed-load
+          opts:
+            tps: 200
+      workload:
+        module: workload/invoke.js
+        arguments:
+          contractId: cc-go
+          contractFunction: CreateAsset
+    - label: Query All the Cars
+      description: Fetch all the stored assets
+      txNumber: 10000
+      rateControl:
+         { type: "linear-rate", opts: { startingTps: 100, finishingTps: 450 } }
+      workload:
+         module: workload/read.js
+         arguments:
+           contractId: cc-go
+           contractFunction: GetAllAssets

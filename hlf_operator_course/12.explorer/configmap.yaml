@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: explorer-config
+  namespace: explorer
+data:
+  network.json: |-
+    {
+    "name": "blockchain-network",
+    "version": "1.0.0",
+    "client": {
+      "tlsEnable": true,
+      "adminCredential": {
+        "id": "exploreradmin",
+        "password": "exploreradminpw"
+      },
+      "enableAuthentication": true,
+      "organization": "Org1MSP",
+      "connection": {
+        "timeout": {
+          "peer": {
+            "endorser": "300"
+          },
+          "orderer": "300"
+        }
+      }
+    },
+    "channels": {
+      "testchannel": {
+        "peers": {
+          "org1-peer1.org1": {}
+        },
+        "connection": {
+          "timeout": {
+            "peer": {
+              "endorser": "6000",
+              "eventHub": "6000",
+              "eventReg": "6000"
+            }
+          }
+        }
+      }
+    },
+    "organizations": {
+      "Org1MSP": {
+        "mspid": "Org1MSP",
+        "adminPrivateKey": {
+          "pem": "-----BEGIN PRIVATE KEY-----.........-----END PRIVATE KEY-----"
+        },
+        "peers": [
+          "org1-peer1.org1"
+        ],
+        "signedCert": {
+          "pem": "-----BEGIN CERTIFICATE-----.........-----END CERTIFICATE-----"
+        }
+      }
+    },
+    "peers": {
+      "org1-peer1.org1": {
+        "tlsCACerts": {
+            "pem": "-----BEGIN CERTIFICATE-----..........-----END CERTIFICATE-----"
+        },
+        "url": "grpcs://peer1-org1.$DOMAIN:443"
+      }
+    }
+    }
+
+  config.json: |-
+    {
+    "network-configs": {
+      "blockchain-network": {
+        "name": "blockchain-network",
+        "profile": "./blockchain-network.json"
+      }
+    },
+    "license": "Apache-2.0"
+    }

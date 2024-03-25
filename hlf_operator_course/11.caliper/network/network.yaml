@@ -1,0 +1,30 @@
+name: Calier Test
+version: "2.0.0"
+
+caliper:
+  blockchain: fabric
+  sutOptions:
+    mutualTls: true
+
+channels:
+  - channelName: testchannel
+    contracts:
+      - id: cc-go
+
+organizations:
+  - mspid: Org1MSP
+    identities:
+      certificates:
+        - name: "admin"
+          admin: true
+          clientSignedCert:
+            pem: |
+              -----BEGIN CERTIFICATE-----
+              -----END CERTIFICATE-----
+          clientPrivateKey:
+            pem: |
+              -----BEGIN PRIVATE KEY-----
+              -----END PRIVATE KEY-----
+    connectionProfile:
+      path: "network/ccp.yaml"
+      discover: true
