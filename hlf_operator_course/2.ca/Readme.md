@@ -42,3 +42,10 @@ kubectl create ns orderer
 kubectl hlf ca create  --image=$CA_IMAGE --version=$CA_VERSION --storage-class=$SC --capacity=1Gi --name=orderer-ca \
     --enroll-id=enroll --enroll-pw=enrollpw --hosts=orderer-ca.$DOMAIN --istio-port=443 --namespace=orderer
 ```
+### To check if the CAs are up
+```bash
+kubectl get pod -A
+kubectl logs <ca_pod_name> -n <namespace>
+telnet <org1>-ca.$DOMAIN 443
+
+```
