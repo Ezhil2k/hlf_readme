@@ -96,6 +96,7 @@ spec:
 ## To check channel status
 ```
 kubectl get fabricmainchannels.hlf.kungfusoftware.es -A
+kubectl describe fabricmainchannels.hlf.kungfusoftware.es mychannel
 ```
 # Channel creation second approach
 ## Channel creation
