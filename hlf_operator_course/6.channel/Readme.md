@@ -1,8 +1,8 @@
 # Channel creation first approach
 ```
-export PEER_ORG_SIGN_CERT=$(kubectl get fabriccas org1-ca -n=orderer -o=jsonpath='{.status.ca_cert}') 
+export PEER_ORG_SIGN_CERT=$(kubectl get fabriccas org1-ca -n=org1 -o=jsonpath='{.status.ca_cert}') 
 
-export PEER_ORG_TLS_CERT=$(kubectl get fabriccas org1-ca -n=orderer -o=jsonpath='{.status.tlsca_cert}') 
+export PEER_ORG_TLS_CERT=$(kubectl get fabriccas org1-ca -n=org2 -o=jsonpath='{.status.tlsca_cert}') 
 
 export IDENT_8=$(printf "%8s" "") 
 
