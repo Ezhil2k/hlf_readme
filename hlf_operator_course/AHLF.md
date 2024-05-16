@@ -75,7 +75,8 @@ export PEER_ORG_TLS_CERT=$(kubectl get fabriccas org1-ca -n=fabric -o=jsonpath='
 export IDENT_8=$(printf "%8s" "")
 export ORDERER_TLS_CERT=$(kubectl get fabriccas ord-ca -n=fabric -o=jsonpath='{.status.tlsca_cert}' | sed -e "s/^/${IDENT_8}/")
 export ORDERER0_TLS_CERT=$(kubectl get fabricorderernodes ord-node1 -n=fabric -o=jsonpath='{.status.tlsCert}' | sed -e "s/^/${IDENT_8}/")
-
+```
+```bash
 kubectl apply -f - <<EOF
 apiVersion: hlf.kungfusoftware.es/v1alpha1
 kind: FabricMainChannel
