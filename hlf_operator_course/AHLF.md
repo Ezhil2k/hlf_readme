@@ -70,7 +70,6 @@ kubectl create secret generic wallet --namespace=fabric --from-file=org1msp.yaml
 ## Channel Creation: 
 
 ```bash
-```bash
 export PEER_ORG_SIGN_CERT=$(kubectl get fabriccas org1-ca -n=fabric -o=jsonpath='{.status.ca_cert}')
 export PEER_ORG_TLS_CERT=$(kubectl get fabriccas org1-ca -n=fabric -o=jsonpath='{.status.tlsca_cert}')
 export IDENT_8=$(printf "%8s" "")
