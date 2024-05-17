@@ -77,113 +77,268 @@ export ORDERER_TLS_CERT=$(kubectl get fabriccas ord-ca -n=fabric -o=jsonpath='{.
 export ORDERER0_TLS_CERT=$(kubectl get fabricorderernodes ord-node1 -n=fabric -o=jsonpath='{.status.tlsCert}' | sed -e "s/^/${IDENT_8}/")
 ```
 ```bash
-kubectl apply -f - <<EOF
-apiVersion: hlf.kungfusoftware.es/v1alpha1
-kind: FabricMainChannel
-metadata:
-  name: mychannel
-spec:
-  name: mychannel
-  adminOrdererOrganizations:
-    - mspID: OrdererMSP
-  adminPeerOrganizations:
-    - mspID: Org1MSP
-  channelConfig:
-    application:
-      acls: null
-      capabilities:
-        - V2_0
-      policies: null
-    capabilities:
-      - V2_0
-    orderer:
-      batchSize:
-        absoluteMaxBytes: 1048576
-        maxMessageCount: 10
-        preferredMaxBytes: 524288
-      batchTimeout: 2s
-      capabilities:
-        - V2_0
-      etcdRaft:
-        options:
-          electionTick: 10
-          heartbeatTick: 1
-          maxInflightBlocks: 5
-          snapshotIntervalSize: 16777216
-          tickInterval: 500ms
-      ordererType: etcdraft
-      policies: null
-      state: STATE_NORMAL
-    policies: null
-  externalOrdererOrganizations: []
-  peerOrganizations:
-    - mspID: Org1MSP
-      caName: "org1-ca"
-      caNamespace: "fabric"
-    - mspID: Org2MSP
-      caName: "org2-ca"
-      caNamespace: "fabric"
-  identities:
-    OrdererMSP:
-      secretKey: orderermsp.yaml
-      secretName: wallet
-      secretNamespace: fabric
-    Org1MSP:
-      secretKey: org1msp.yaml
-      secretName: wallet
-      secretNamespace: fabric
-    Org2MSP:
-      secretKey: org2msp.yaml
-      secretName: wallet
-      secretNamespace: fabric
-  externalPeerOrganizations: []
-  ordererOrganizations:
-    - caName: "ord-ca"
-      caNamespace: "fabric"
-      externalOrderersToJoin:
-        - host: ord-node1.fabric
-          port: 7053
-      mspID: OrdererMSP
-      ordererEndpoints:
-        - ord-node1.fabric:7050
-      orderersToJoin: []
-  orderers:
-    - host: ord-node1.fabric
-      port: 7050
-      tlsCert: |-
-        ${ORDERER0_TLS_CERT}
+kubectl apply -f - <<EOF 
+
+apiVersion: hlf.kungfusoftware.es/v1alpha1 
+
+kind: FabricMainChannel 
+
+metadata: 
+
+  name: mychannel 
+
+spec: 
+
+  name: mychannel 
+
+  adminOrdererOrganizations: 
+
+    - mspID: OrdererMSP 
+
+  adminPeerOrganizations: 
+
+    - mspID: Org1MSP 
+
+  channelConfig: 
+
+    application: 
+
+      acls: null 
+
+      capabilities: 
+
+        - V2_0 
+
+      policies: null 
+
+    capabilities: 
+
+      - V2_0 
+
+    orderer: 
+
+      batchSize: 
+
+        absoluteMaxBytes: 1048576 
+
+        maxMessageCount: 10 
+
+        preferredMaxBytes: 524288 
+
+      batchTimeout: 2s 
+
+      capabilities: 
+
+        - V2_0 
+
+      etcdRaft: 
+
+        options: 
+
+          electionTick: 10 
+
+          heartbeatTick: 1 
+
+          maxInflightBlocks: 5 
+
+          snapshotIntervalSize: 16777216 
+
+          tickInterval: 500ms 
+
+      ordererType: etcdraft 
+
+      policies: null 
+
+      state: STATE_NORMAL 
+
+    policies: null 
+
+  externalOrdererOrganizations: [] 
+
+  peerOrganizations: 
+
+    - mspID: Org1MSP 
+
+      caName: "org1-ca" 
+
+      caNamespace: "fabric" 
+
+    - mspID: Org2MSP 
+
+      caName: "org2-ca" 
+
+      caNamespace: "fabric" 
+
+  identities: 
+
+    OrdererMSP: 
+
+      secretKey: orderermsp.yaml 
+
+      secretName: wallet 
+
+      secretNamespace: fabric 
+
+    Org1MSP: 
+
+      secretKey: org1msp.yaml 
+
+      secretName: wallet 
+
+      secretNamespace: fabric 
+
+    Org2MSP: 
+
+      secretKey: org2msp.yaml 
+
+      secretName: wallet 
+
+      secretNamespace: fabric 
+
+  externalPeerOrganizations: [] 
+
+  ordererOrganizations: 
+
+    - caName: "ord-ca" 
+
+      caNamespace: "fabric" 
+
+      externalOrderersToJoin: 
+
+        - host: ord-node1.fabric 
+
+          port: 7053 
+
+      mspID: OrdererMSP 
+
+      ordererEndpoints: 
+
+        - ord-node1.fabric:7050 
+
+      orderersToJoin: [] 
+
+  orderers: 
+
+    - host: ord-node1.fabric 
+
+      port: 7050 
+
+      tlsCert: |- 
+
+${ORDERER0_TLS_CERT} 
+
+  
+
 EOF
 ```
 ## Attach Peers to the Channel: 
 ```bash
 export IDENT_8=$(printf "%8s" "")
 export ORDERER0_TLS_CERT=$(kubectl get fabricorderernodes ord-node1 -n=fabric -o=jsonpath='{.status.tlsCert}' | sed -e "s/^/${IDENT_8}/")
+```
+```bash
+kubectl apply -f - <<EOF 
 
-kubectl apply -f - <<EOF
-apiVersion: hlf.kungfusoftware.es/v1alpha1
-kind: FabricFollowerChannel
-metadata:
-  name: mychannel-org1msp
-spec:
-  anchorPeers:
-    - host: org1-peer1.fabric
-      port: 7051
-  hlfIdentity:
-    secretKey: org1msp.yaml
-    secretName: wallet
-    secretNamespace: fabric
-  mspId: Org1MSP
-  name: mychannel
-  externalPeersToJoin: []
-  orderers:
-    - certificate: |
-        ${ORDERER0_TLS_CERT}
-      url: grpcs://ord-node1.fabric:7050
-  peersToJoin:
-    - name: org1-peer1
-      namespace: fabric
-    - name: org1-peer2
-      namespace: fabric
+apiVersion: hlf.kungfusoftware.es/v1alpha1 
+
+kind: FabricFollowerChannel 
+
+metadata: 
+
+  name: mychannel-org1msp 
+
+spec: 
+
+  anchorPeers: 
+
+    - host: org1-peer1.fabric 
+
+      port: 7051 
+
+  hlfIdentity: 
+
+    secretKey: org1msp.yaml 
+
+    secretName: wallet 
+
+    secretNamespace: fabric 
+
+  mspId: Org1MSP 
+
+  name: mychannel 
+
+  externalPeersToJoin: [] 
+
+  orderers: 
+
+    - certificate: | 
+
+${ORDERER0_TLS_CERT} 
+
+      url: grpcs://ord-node1.fabric:7050 
+
+  peersToJoin: 
+
+    - name: org1-peer1 
+
+      namespace: fabric 
+
+    - name: org1-peer2 
+
+      namespace: fabric 
+
 EOF
 
+```
+```bash
+kubectl apply -f - <<EOF 
+
+apiVersion: hlf.kungfusoftware.es/v1alpha1 
+
+kind: FabricFollowerChannel 
+
+metadata: 
+
+  name: mychannel-org2msp 
+
+spec: 
+
+  anchorPeers: 
+
+    - host: org2-peer1.fabric 
+
+      port: 7051 
+
+  hlfIdentity: 
+
+    secretKey: org2msp.yaml 
+
+    secretName: wallet 
+
+    secretNamespace: fabric 
+
+  mspId: Org2MSP 
+
+  name: mychannel 
+
+  externalPeersToJoin: [] 
+
+  orderers: 
+
+    - certificate: | 
+
+${ORDERER0_TLS_CERT} 
+
+      url: grpcs://ord-node1.fabric:7050 
+
+  peersToJoin: 
+
+    - name: org2-peer1 
+
+      namespace: fabric 
+
+    - name: org2-peer2 
+
+      namespace: fabric 
+EOF
 ```
