@@ -353,6 +353,12 @@ ${ORDERER0_TLS_CERT}
       namespace: fabric 
 EOF
 ```
+## Generate Network Configuration file 
+```bash
+kubectl hlf inspect -n=fabric --output networkConfig.yaml -o Org1MSP -o OrdererMSP -o Org2MSP 
+kubectl hlf utils adduser --userPath=org1msp.yaml --config=networkConfig.yaml --username=admin --mspid=Org1MSP 
+kubectl hlf utils adduser --userPath=org2msp.yaml --config=networkConfig.yaml --username=admin --mspid=Org2MSP
+```
 # Chaincode Setup
 
 ## Chaincode Packaging
