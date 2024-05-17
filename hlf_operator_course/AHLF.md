@@ -1,3 +1,14 @@
+#Network cleanup
+```bash
+kubectl delete fabricorderernodes.hlf.kungfusoftware.es --all-namespaces --all
+kubectl delete fabricpeers.hlf.kungfusoftware.es --all-namespaces --all
+kubectl delete fabriccas.hlf.kungfusoftware.es --all-namespaces --all
+kubectl delete fabricchaincode.hlf.kungfusoftware.es --all-namespaces --all
+kubectl delete fabricmainchannels --all-namespaces --all
+kubectl delete fabricfollowerchannels --all-namespaces --all
+kubectl delete secret wallet -n fabric
+```
+
 # HLF Network Setup in Kubernetes with HLF Operator
 ```bash
 export PEER_IMAGE=hyperledger/fabric-peer 
