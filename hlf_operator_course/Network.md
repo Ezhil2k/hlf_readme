@@ -47,6 +47,34 @@ chmod +x /tmp/kubectl-hlf/kubectl-hlf
 sudo mv /tmp/kubectl-hlf/kubectl-hlf /usr/local/bin/kubectl-hlf
 kubectl-hlf
 ```
+# Cluster Setup
+
+### Local setup - Kind Cluster
+
+`kind` lets you run Kubernetes on your local computer. This tool requires that you have either `Docker` or `Podman` installed.
+
+```bash
+cat << EOF > kind-config.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  image: kindest/node:v1.27.3
+  extraPortMappings:
+  - containerPort: 30949
+    hostPort: 80
+  - containerPort: 30950
+    hostPort: 443
+- role: worker
+  image: kindest/node:v1.27.3
+- role: worker
+  image: kindest/node:v1.27.3
+EOF
+```
+```bash
+kind create cluster --config=./kind-config.yaml
+
+```
 ### Istio CLI
 
 ```bash
@@ -178,35 +206,6 @@ spec:
   
 
 EOF
-```
-
-# Cluster Setup
-
-### Local setup - Kind Cluster
-
-`kind` lets you run Kubernetes on your local computer. This tool requires that you have either `Docker` or `Podman` installed.
-
-```bash
-cat << EOF > kind-config.yaml
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  image: kindest/node:v1.27.3
-  extraPortMappings:
-  - containerPort: 30949
-    hostPort: 80
-  - containerPort: 30950
-    hostPort: 443
-- role: worker
-  image: kindest/node:v1.27.3
-- role: worker
-  image: kindest/node:v1.27.3
-EOF
-```
-```bash
-kind create cluster --config=./kind-config.yaml
-
 ```
 ## DNS SETUP 
 ### Local setup
