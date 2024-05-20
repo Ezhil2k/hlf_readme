@@ -1,4 +1,4 @@
-#Network cleanup
+# Network cleanup
 ```bash
 kubectl delete fabricorderernodes.hlf.kungfusoftware.es --all-namespaces --all
 kubectl delete fabricpeers.hlf.kungfusoftware.es --all-namespaces --all
