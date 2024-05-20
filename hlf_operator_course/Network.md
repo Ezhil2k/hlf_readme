@@ -84,6 +84,7 @@ export PATH=$PWD/bin:$PATH
 kubectl create namespace istio-system 
 istioctl operator init 
 ```
+### Istio setup with loadbalancer
 ```bash
 kubectl apply -f - <<EOF 
 
