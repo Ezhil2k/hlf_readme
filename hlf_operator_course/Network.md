@@ -79,7 +79,11 @@ kind create cluster --config=./kind-config.yaml
 
 ```bash
 curl -L https://istio.io/downloadIstio | sh -
-cd istio-1.19.3 
+```
+```bash
+cd <ISTIO_DIRECTORY> 
+```
+```bash
 export PATH=$PWD/bin:$PATH 
 kubectl create namespace istio-system 
 istioctl operator init 
@@ -212,7 +216,8 @@ EOF
 ### Local setup
 ```bash
 CLUSTER_IP=$(kubectl -n istio-system get svc istio-ingressgateway -o json | jq -r .spec.clusterIP) 
- 
+```
+```bash
 
 kubectl apply -f - <<EOF 
 
@@ -281,4 +286,12 @@ data:
     } 
 
 EOF
+```
+## Bevel Fabric Operator
+
+```
+helm repo add kfs https://kfsoftware.github.io/hlf-helm-charts --force-update
+
+helm install hlf-operator --version=1.10.0 -- kfs/hlf-operator
+
 ```
