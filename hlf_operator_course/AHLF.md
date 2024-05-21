@@ -1,7 +1,5 @@
 Skip to [HLF Section](#HLF) from here.
-
-# Prerequsites
-
+# KIND Network setup
 ### Kubectl
 
 On Linux:
