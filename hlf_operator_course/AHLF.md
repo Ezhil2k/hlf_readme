@@ -1,4 +1,4 @@
-- [HLF Setup](#HyperledgerFabricNetworkSetup)
+- [HLF Setup](#HLF)
 
 # Prerequsites
 
@@ -297,7 +297,7 @@ helm repo add kfs https://kfsoftware.github.io/hlf-helm-charts --force-update
 helm install hlf-operator --version=1.10.0 -- kfs/hlf-operator
 
 ```
-# HyperledgerFabricNetworkSetup
+# HLF
 ## Network cleanup
 ```bash
 kubectl delete fabricorderernodes.hlf.kungfusoftware.es --all-namespaces --all
