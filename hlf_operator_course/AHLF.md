@@ -1,4 +1,4 @@
-- [HLF Setup](#HLF)
+Skip to [HLF Section](#HLF) from here.
 
 # Prerequsites
 
