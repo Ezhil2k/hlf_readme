@@ -715,6 +715,6 @@ kubectl hlf chaincode approveformyorg --config=networkConfig.yaml --user=admin -
 ## Chaincode commit
 
 ```bash
-kubectl hlf chaincode commit --config=networkConfig.yaml --mspid=Org1MSP --user=admin --version 1.0 --sequence 1 --name=$CC_NAME --policy="OR('Org1MSP.member','Org2MSP.member')" --channel=testchannel
+kubectl hlf chaincode commit --config=networkConfig.yaml --mspid=Org1MSP --user=admin --version 1.0 --sequence 1 --name=$CC_NAME --policy="OR('Org1MSP.member','Org2MSP.member')" --channel=mychannel
 ```
 
