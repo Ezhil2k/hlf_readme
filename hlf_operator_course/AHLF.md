@@ -37,9 +37,9 @@ On Linux:
 
 ``` bash
 # For AMD64 / x86_64
-[ $(uname -m) = x86_64 ] && curl -Lo /tmp/kubectl-hlf.zip https://github.com/hyperledger/bevel-operator-fabric/releases/download/v1.9.1/hlf-operator_v1.9.1_linux_amd64.zip
+[ $(uname -m) = x86_64 ] && curl -Lo /tmp/kubectl-hlf.zip https://github.com/hyperledger/bevel-operator-fabric/releases/download/v1.10.1/hlf-operator_v1.10.1_linux_amd64.zip
 # For ARM64
-[ $(uname -m) = aarch64 ] && curl -Lo /tmp/kubectl-hlf.zip https://github.com/hyperledger/bevel-operator-fabric/releases/download/v1.9.1/hlf-operator_v1.9.1_linux_arm64.zip
+[ $(uname -m) = aarch64 ] && curl -Lo /tmp/kubectl-hlf.zip https://github.com/hyperledger/bevel-operator-fabric/releases/download/v1.10.1/hlf-operator_v1.10.1_linux_arm64.zip
 
 mkdir -p /tmp/kubectl-hlf
 unzip /tmp/kubectl-hlf.zip -d /tmp/kubectl-hlf
@@ -292,7 +292,7 @@ EOF
 ```
 helm repo add kfs https://kfsoftware.github.io/hlf-helm-charts --force-update
 
-helm install hlf-operator --version=1.10.0 -- kfs/hlf-operator
+helm install hlf-operator --version=1.10.1 -- kfs/hlf-operator
 
 ```
 # HLF
