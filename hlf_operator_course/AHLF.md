@@ -718,3 +718,19 @@ kubectl hlf chaincode approveformyorg --config=networkConfig.yaml --user=admin -
 kubectl hlf chaincode commit --config=networkConfig.yaml --mspid=Org1MSP --user=admin --version 1.0 --sequence 1 --name=$CC_NAME --policy="OR('Org1MSP.member','Org2MSP.member')" --channel=mychannel
 ```
 
+# Interacting with chaincode
+
+## Invoke chaincode(Example)
+```
+kubectl hlf chaincode invoke --config=networkConfig.yaml --user=admin --peer=org1-peer1.org1 --chaincode=$CC_NAME --channel=testchannel --fcn=CreateAsset -a "1000" -a "red" -a "5" -a "aditya" -a "5000"
+```
+
+## Query(Example)
+```
+kubectl hlf chaincode query --config=networkConfig.yaml --user=admin --peer=org1-peer1.org1 --chaincode=$CC_NAME --channel=testchannel --fcn=GetAllAssets
+```
+
+```
+kubectl hlf chaincode query --config=networkConfig.yaml --user=admin --peer=org1-peer1.org1 --chaincode=$CC_NAME --channel=testchannel --fcn=ReadAsset -a '1000'
+```
+
