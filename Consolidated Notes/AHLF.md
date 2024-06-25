@@ -16,7 +16,6 @@ kubectl version --client
 ```
 
 ### Kind 
-
 On Linux:
 
 ``` bash
